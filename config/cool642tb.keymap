@@ -46,9 +46,7 @@
 // オートマウスレイヤーの設定
 // ※トラックボールが動いた時に自動で MOUSE レイヤーに遷移します
 // -----------------------------------------------------
-&pointing {
-    automouse-layer = <MOUSE>;
-};
+
 
 / {
     combos {
@@ -182,7 +180,7 @@
         MOUSE {
             // オートマウス起動時。Jに左クリック、Kに右クリックを配置
             bindings = <
-&trans &trans &trans &trans &trans                          &trans     &trans     &trans     &trans     &trans
+&trans &trans &trans &trans &trans                          &trans     &trans     &to 0     &trans     &trans
 &trans &trans &trans &trans &trans        &none     &none   &trans     &mkp MB1   &mkp MB2   &trans     &trans
 &trans &trans &trans &trans &trans        &none     &none   &trans     &trans     &trans     &trans     &trans
 &trans &trans &trans &trans &trans        &mkp MB1          &to 0      &trans     &trans
