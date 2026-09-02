@@ -3,7 +3,36 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
 
+// -----------------------------------------------------
+// OS設定を日本語キーボードのまま使用するための変換定義
+// -----------------------------------------------------
+#define JP_DQUOTE AT        // "
+#define JP_AMPERSAND CARET  // &
+#define JP_QUOTE AMPERSAND  // '
+#define JP_EQUAL UNDER      // =
+#define JP_CARET EQUAL      // ^
+#define JP_YEN 0x89         // ¥
+#define JP_PLUS COLON       // +
+#define JP_TILDE PLUS       // ~
+#define JP_PIPE LS(0x89)    // |
+#define JP_AT LBKT          // @
+#define JP_COLON SQT        // :
+#define JP_ASTERISK DQT     // *
+#define JP_BACKQUOTE LBRC   // `
+#define JP_UNDERSCORE LS(0x87) // _
+#define JP_LBRACKET RBKT    // [
+#define JP_RBRACKET BSLH    // ]
+#define JP_LPAREN ASTRK     // (
+#define JP_RPAREN LPAR      // )
+#define JP_LBRACE RBRC      // {
+#define JP_RBRACE PIPE      // }
+
 #define ZMK_MOUSE_DEFAULT_SCRL_VAL 100
+
+// トラックボール（マウス）の感度を下げるための設定
+// ※数値は適宜調整してください（標準は800〜1200程度。小さくすると遅くなります）
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 600  
+
 #define MOUSE 4
 #define SCROLL 5
 #define NUM 6
@@ -11,6 +40,14 @@
 &mt {
     flavor = "balanced";
     quick-tap-ms = <0>;
+};
+
+// -----------------------------------------------------
+// オートマウスレイヤーの設定
+// ※トラックボールが動いた時に自動で MOUSE レイヤーに遷移します
+// -----------------------------------------------------
+&pointing {
+    automouse-layer = <MOUSE>;
 };
 
 / {
@@ -53,6 +90,13 @@
             bindings = <&mkp MB2>;
             key-positions = <38 37>;
         };
+
+        // 【追加】MOUSEレイヤー滞在時に J(18) と K(19) を同時押しで SCROLL レイヤーに移行する
+        jk_scroll {
+            bindings = <&mo SCROLL>;
+            key-positions = <18 19>;
+            layers = <MOUSE>;
+        };
     };
 
     behaviors {
@@ -64,14 +108,12 @@
         };
     };
 
-    // エンコーダー：キー
     rot_kp: sensor_rotate_kp {
         compatible = "zmk,behavior-sensor-rotate-var";
         #sensor-binding-cells = <2>;
         bindings = <&kp>, <&kp>;
     };
 
-    // エンコーダー：マウススクロール 
     rot_msc: sensor_rotate_msc {
         compatible = "zmk,behavior-sensor-rotate-var";
         #sensor-binding-cells = <2>;
@@ -79,7 +121,6 @@
         bindings = <&msc>, <&msc>;
     };
 
-    // エンコーダー：マウススクロール(MOVE_Y)
     scroll_move_y: sensor_rotate_msc_for_move_y {
         compatible = "zmk,behavior-sensor-rotate";
         #sensor-binding-cells = <0>;
@@ -87,7 +128,6 @@
         tap-ms = <65>;
     };
 
-    // エンコーダー：マウススクロール(MOVE_X)
     scroll_move_x: sensor_rotate_msc_for_move_x {
         compatible = "zmk,behavior-sensor-rotate";
         #sensor-binding-cells = <0>;
@@ -103,20 +143,18 @@
 &kp Q      &kp W    &kp E       &kp R      &kp T                                          &kp Y      &kp U    &kp I      &kp O      &kp P
 &kp A      &kp S    &kp D       &kp F      &kp G             &to 1       &to 2            &kp H      &kp J    &kp K      &kp L      &kp ENTER
 &kp Z      &kp X    &kp C       &kp V      &kp B             &to 3       &to 4            &kp N      &kp M    &kp COMMA  &kp PERIOD &kp SLASH
-&kp ESCAPE &kp TAB  &kp LCTRL   &kp LGUI   &kp INT_MUHENKAN  &kp SPACE   &kp INT_HENKAN   &kp BSPC   &kp LSHIFT
+&kp GRAVE  &kp TAB  &kp LCTRL   &kp LGUI   &kp INT_MUHENKAN  &kp SPACE   &kp INT_HENKAN   &kp BSPC   &kp LSHIFT
             >;
             sensor-bindings = <&scroll_move_y>;
         };
 
         FUNCTION {
-            // JIS OS向けに、印字通りの記号が出るUSキーコードを設定しています
+            // 左手は数字・主要記号、右手はJIS配列の右側にある記号を中心に配置
             bindings = <
-&kp N1       &kp N2      &kp N3     &kp N4        &kp N5                            &kp N6         &kp N7    &kp N8         &kp N9          &kp N0
-//           @           #          $             %                                 &              :         (              )               -
-&kp EXCL     &kp LBKT    &kp HASH   &kp DLLR      &kp PRCNT         &none   &none   &kp CARET      &kp SQT   &kp ASTRK      &kp LPAR        &kp MINUS
-// +         *           /          =             ^                                 ~              [         ]              ¥               
-&kp LS(SEMI) &kp LS(SQT) &kp SLASH  &kp LS(MINUS) &kp EQUAL         &none   &none   &kp LS(EQUAL)  &kp RBKT  &kp NON_US_HASH &kp INT_YEN    &kp ENTER
-&trans       &trans      &trans     &trans        &trans            &kp SPACE       &to 0          &kp DEL   &trans
+&kp N1       &kp N2          &kp N3          &kp N4            &kp N5                            &kp N6           &kp N7           &kp N8         &kp N9         &kp N0
+&kp EXCL     &kp JP_DQUOTE   &kp HASH        &kp DLLR          &kp PRCNT         &none   &none   &kp JP_AMPERSAND &kp JP_QUOTE     &kp JP_LPAREN  &kp JP_RPAREN  &kp MINUS
+&kp JP_AT    &kp JP_LBRACKET &kp JP_RBRACKET &kp JP_CARET      &kp JP_YEN        &none   &none   &kp JP_PLUS      &kp JP_ASTERISK  &kp SEMI       &kp JP_COLON   &kp JP_EQUAL
+&trans       &trans          &trans          &trans            &trans            &kp SPACE       &to 0            &kp DEL          &trans
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
         };
@@ -124,40 +162,42 @@
         NUM {
             bindings = <
 &kp F1       &kp F2       &kp F3       &kp F4       &kp F5                            &kp F6     &kp F7     &kp F8     &kp F9     &kp F10
-&kp N1       &kp N2       &kp N3       &kp N4       &kp N5          &none     &none   &kp N6     &kp N7     &kp N8     &kp N9     &kp N0
-&bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_CLR   &none           &none     &none   &none      &none      &none      &none      &kp ENTER
-&trans       &trans       &trans       &trans       &trans          &kp SPACE         &to 0      &trans     &trans
+&kp N1       &kp N2       &kp N3       &kp N4       &kp N5            &none     &none   &kp N6     &kp N7     &kp N8     &kp N9     &kp N0
+&bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_CLR   &none             &none     &none   &none      &none      &none      &none      &kp ENTER
+&trans       &trans       &trans       &trans       &trans            &kp SPACE         &to 0      &trans     &trans
             >;
             sensor-bindings = <&inc_dec_kp PG_UP PAGE_DOWN>;
         };
 
         ARROW {
-            // H, J, K, L に Vimライクなカーソルを配置
             bindings = <
-&trans &trans &trans &trans &trans                          &trans    &trans     &trans   &trans      &trans
-&trans &trans &trans &trans &trans        &none     &none   &kp LEFT  &kp DOWN   &kp UP   &kp RIGHT   &kp ENTER
-&trans &trans &trans &trans &trans        &none     &none   &trans    &trans     &trans   &trans      &trans
-&trans &trans &trans &trans &trans        &kp SPACE         &to 0     &trans     &trans
+&trans &trans &trans &trans &trans                          &trans    &trans    &trans    &trans    &trans
+&trans &trans &trans &trans &trans        &none     &none   &kp LEFT  &kp DOWN  &kp UP    &kp RIGHT &kp ENTER
+&trans &trans &trans &trans &trans        &none     &none   &trans    &trans    &trans    &trans    &trans
+&trans &trans &trans &trans &trans        &kp SPACE         &to 0     &trans    &trans
             >;
             sensor-bindings = <&inc_dec_kp PG_UP PAGE_DOWN>;
         };
 
         MOUSE {
+            // オートマウス起動時。Jに左クリック、Kに右クリックを配置
             bindings = <
 &trans &trans &trans &trans &trans                          &trans     &trans     &trans     &trans     &trans
+&trans &trans &trans &trans &trans        &none     &none   &trans     &mkp MB1   &mkp MB2   &trans     &trans
 &trans &trans &trans &trans &trans        &none     &none   &trans     &trans     &trans     &trans     &trans
-&trans &trans &trans &trans &trans        &none     &none   &trans     &trans     &mkp MB1   &mkp MB2   &trans
 &trans &trans &trans &trans &trans        &mkp MB1          &to 0      &trans     &trans
             >;
             sensor-bindings = <&inc_dec_kp PG_UP PAGE_DOWN>;
         };
 
         SCROLL {
+            // JとKを同時押ししている間ここに飛ぶ。
+            // ファームウェア側の設定（scroll-layers）により、トラックボールがスクロールとして機能します。
             bindings = <
-&trans &trans &trans &trans &trans                          &trans     &trans     &trans     &trans     &trans
-&trans &trans &trans &trans &trans        &none     &none   &trans     &trans     &trans     &trans     &trans
-&trans &trans &trans &trans &trans        &none     &none   &trans     &trans     &trans     &trans     &trans
-&trans &trans &trans &trans &trans        &kp SPACE         &to 0      &trans     &trans
+&trans &trans &trans &trans &trans                                   &trans          &trans          &trans        &trans           &trans
+&trans &trans &trans &trans &trans        &none          &none       &msc SCRL_LEFT  &msc SCRL_DOWN  &msc SCRL_UP  &msc SCRL_RIGHT  &trans
+&trans &trans &trans &trans &trans        &none          &none       &trans          &trans          &trans        &trans           &trans
+&trans &trans &trans &trans &trans        &to 5                      &to 0           &trans          &trans
             >;
             sensor-bindings = <&inc_dec_kp PG_UP PAGE_DOWN>;
         };
