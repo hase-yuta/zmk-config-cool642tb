@@ -140,8 +140,8 @@
             bindings = <
 &kp Q      &kp W    &kp E       &kp R      &kp T                                          &kp Y      &kp U    &kp I      &kp O      &kp P
 &kp A      &kp S    &kp D       &kp F      &kp G             &to 1       &to 2            &kp H      &kp J    &kp K      &kp L      &kp ENTER
-&kp Z      &kp X    &kp C       &kp V      &kp B             &to 3       &to 4            &kp N      &kp M    &kp COMMA  &kp PERIOD &kp SLASH
-&kp GRAVE  &kp TAB  &kp LCTRL   &kp LGUI   &kp INT_MUHENKAN  &kp SPACE   &kp INT_HENKAN   &kp BSPC   &kp LSHIFT
+&kp Z      &kp X    &kp C       &kp V      &kp B             &to 1       &to 4            &kp N      &kp M    &kp COMMA  &kp PERIOD &kp SLASH
+&kp GRAVE  &kp TAB  &kp LGUI   &kp LCTRL   &kp SPACE         &kp 3       &kp CAPSLOCK   &kp BSPC   &kp LSHIFT
             >;
             sensor-bindings = <&scroll_move_y>;
         };
