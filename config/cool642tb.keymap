@@ -30,8 +30,7 @@
 #define ZMK_MOUSE_DEFAULT_SCRL_VAL 100
 
 // トラックボール（マウス）の感度を下げるための設定
-// ※数値は適宜調整してください（標準は800〜1200程度。小さくすると遅くなります）
-#define ZMK_POINTING_DEFAULT_MOVE_VAL 600  
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 600
 
 #define MOUSE 4
 #define SCROLL 5
@@ -44,9 +43,7 @@
 
 // -----------------------------------------------------
 // オートマウスレイヤーの設定
-// ※トラックボールが動いた時に自動で MOUSE レイヤーに遷移します
 // -----------------------------------------------------
-
 
 / {
     combos {
@@ -55,21 +52,25 @@
         comb1 {
             bindings = <&kp TAB>;
             key-positions = <11 10>;
+            layers = <0>;
         };
 
         comb2 {
             bindings = <&kp LS(ESCAPE)>;
             key-positions = <0 1>;
+            layers = <0>;
         };
 
         comb3 {
             bindings = <&kp CAPSLOCK>;
             key-positions = <22 23>;
+            layers = <0>;
         };
 
         comb4 {
             bindings = <&kp BACKSPACE>;
             key-positions = <9 8>;
+            layers = <0>;
         };
 
         comb5 {
@@ -89,7 +90,6 @@
             key-positions = <38 37>;
         };
 
-        // 【追加】MOUSEレイヤー滞在時に J(18) と K(19) を同時押しで SCROLL レイヤーに移行する
         jk_scroll {
             bindings = <&mo SCROLL>;
             key-positions = <18 19>;
@@ -138,18 +138,17 @@
 
         default_layer {
             bindings = <
-&kp Q      　&kp W    &kp E       &kp R      &kp T                                          &kp Y      &kp U    &kp I      &kp O      &kp P
-&kp A      　&kp S    &kp D       &kp F      &kp G             &to 2            &kp MINUS        &kp H      &kp J    &kp K      &kp L      &kp ENTER
-&kp Z      　&kp X    &kp C       &kp V      &kp B             &mo 3            &to 4            &kp N      &kp M    &kp COMMA  &kp PERIOD &kp SLASH
-&kp LSHIFT  &kp TAB  &kp LGUI   &kp LCTRL   &kp SPACE          &lt 1 SPACE      &kp CAPSLOCK   &kp BSPC   &kp LSHIFT
+&kp Q      &kp W    &kp E       &kp R      &kp T                                                  &kp Y      &kp U    &kp I      &kp O      &kp P
+&kp A      &kp S    &kp D       &kp F      &kp G             &to 2             &kp MINUS          &kp H      &kp J    &kp K      &kp L      &kp ENTER
+&kp Z      &kp X    &kp C       &kp V      &kp B             &mo 3             &to 4              &kp N      &kp M    &kp COMMA  &kp PERIOD &kp SLASH
+&kp LSHIFT &kp TAB  &kp LGUI    &kp LCTRL  &kp SPACE                           &lt 1 SPACE        &kp CAPSLOCK &kp BSPC &kp LSHIFT
             >;
             sensor-bindings = <&scroll_move_y>;
         };
 
         FUNCTION {
-            // 左手は数字・主要記号、右手はJIS配列の右側にある記号を中心に配置
             bindings = <
-&kp N1       &kp N2          &kp N3          &kp N4            &kp N5                            &kp N6           &kp N7           &kp N8         &kp N9         &kp N0
+&kp N1       &kp N2          &kp N3          &kp N4            &kp N5                                          &kp N6           &kp N7           &kp N8         &kp N9         &kp N0
 &kp EXCL     &kp JP_DQUOTE   &kp HASH        &kp DLLR          &kp PRCNT         &none   &none   &kp JP_AMPERSAND &kp JP_QUOTE     &kp JP_LPAREN  &kp JP_RPAREN  &kp MINUS
 &kp JP_AT    &kp JP_LBRACKET &kp JP_RBRACKET &kp JP_CARET      &kp JP_YEN        &none   &none   &kp JP_PLUS      &kp JP_ASTERISK  &kp SEMI       &kp JP_COLON   &kp JP_EQUAL
 &trans       &trans          &trans          &trans            &trans            &kp SPACE       &to 0            &kp DEL          &trans
@@ -159,7 +158,7 @@
 
         NUM {
             bindings = <
-&kp F1       &kp F2       &kp F3       &kp F4       &kp F5                            &kp F6     &kp F7     &kp F8     &kp F9     &kp F10
+&kp F1       &kp F2       &kp F3       &kp F4       &kp F5                                     &kp F6     &kp F7     &kp F8     &kp F9     &kp F10
 &kp N1       &kp N2       &kp N3       &kp N4       &kp N5            &none     &none   &kp N6     &kp N7     &kp N8     &kp N9     &kp N0
 &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_CLR   &none             &none     &none   &none      &none      &none      &none      &kp ENTER
 &trans       &trans       &trans       &trans       &trans            &kp SPACE         &to 0      &trans     &trans
@@ -169,18 +168,17 @@
 
         ARROW {
             bindings = <
-&trans     &trans       &trans    &trans    &trans                                  &kp LC(Y)    &trans    &to 0    &trans    &kp LC(P)
-&kp LC(A)  &kp LC(S)    &trans    &trans    &trans        &none             &none   &kp LEFT  &kp DOWN  &kp UP    &kp RIGHT &kp ENTER
-&kp LC(Z)  &kp LC(X)    &kp LC(C) &kp LC(V) &trans        &none             &none   &trans    &trans    &trans    &trans    &trans
-&trans     &trans       &trans    &trans    &trans        &kp SPACE         &to 0   &trans    &trans
+&trans    &trans    &trans    &trans    &trans                                      &kp LC(Y) &trans    &to 0     &trans    &kp LC(P)
+&kp LC(A) &kp LC(S) &trans    &trans    &trans        &none     &none     &kp LEFT  &kp DOWN  &kp UP    &kp RIGHT &kp ENTER
+&kp LC(Z) &kp LC(X) &kp LC(C) &kp LC(V) &trans        &none     &none     &trans    &trans    &trans    &trans    &trans
+&trans    &trans    &trans    &trans    &trans        &kp SPACE           &to 0     &trans    &trans
             >;
             sensor-bindings = <&inc_dec_kp PG_UP PAGE_DOWN>;
         };
 
         MOUSE {
-            // オートマウス起動時。Jに左クリック、Kに右クリックを配置
             bindings = <
-&trans &trans &trans &trans &trans                          &trans     &trans     &to 0     &trans     &trans
+&trans &trans &trans &trans &trans                          &trans     &trans     &to 0      &trans     &trans
 &trans &trans &trans &trans &trans        &none     &none   &trans     &mkp MB1   &mkp MB2   &trans     &trans
 &trans &trans &trans &trans &trans        &none     &none   &trans     &trans     &trans     &trans     &trans
 &trans &trans &trans &trans &trans        &mkp MB1          &to 0      &trans     &trans
@@ -189,10 +187,8 @@
         };
 
         SCROLL {
-            // JとKを同時押ししている間ここに飛ぶ。
-            // ファームウェア側の設定（scroll-layers）により、トラックボールがスクロールとして機能します。
             bindings = <
-&trans &trans &trans &trans &trans                                   &trans          &trans          &trans        &trans           &trans
+&trans &trans &trans &trans &trans                                       &trans          &trans          &trans        &trans           &trans
 &trans &trans &trans &trans &trans        &none          &none       &msc SCRL_LEFT  &msc SCRL_DOWN  &msc SCRL_UP  &msc SCRL_RIGHT  &trans
 &trans &trans &trans &trans &trans        &none          &none       &trans          &trans          &trans        &trans           &trans
 &trans &trans &trans &trans &trans        &to 5                      &to 0           &trans          &trans
