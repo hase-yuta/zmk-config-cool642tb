@@ -15,15 +15,6 @@
         ;
 };
 
-#/ {
-#    trackball_listener: trackball_listener {
-#       compatible = "zmk,input-listener";
-#        device = <&trackball>;
-#        // トラボ使用後10秒間、レイヤー4が有効
-#        input-processors = <&zip_temp_layer 4 10000>;
-#    };
-#};
-
 &pinctrl {
     spi0_default: spi0_default {
         group1 {
