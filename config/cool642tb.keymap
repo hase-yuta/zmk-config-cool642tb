@@ -92,7 +92,7 @@
         };
 
         jk_scroll {
-            bindings = <>;
+            bindings = <&mo SCROLL>;
             key-positions = <18 19>;
             layers = <MOUSE>;
         };
